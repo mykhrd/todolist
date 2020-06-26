@@ -1,34 +1,45 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-
 const app = express();
+
+let items = ["task1", "task2"];
 
 app.set('view engine', 'ejs');
 
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+
+// GET method route
 app.get('/', function (req, res) {
 
     let today = new Date();
-    let dayOfWeek = new Array(7);
 
-    dayOfWeek[0] = "Sunday";
-    dayOfWeek[1] = "Monday";
-    dayOfWeek[2] = "Tuesday";
-    dayOfWeek[3] = "Wednesday";
-    dayOfWeek[4] = "Thursday";
-    dayOfWeek[5] = "Friday";
-    dayOfWeek[6] = "Saturday";
+    let options = {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long'
+    }
 
-    let currentDay = dayOfWeek[today.getDay()];
-    //let day = "";
+    let day = today.toLocaleDateString('ja-JP', options);
 
-    // Get the day of the week, using local time.
-    //day = currentDay;
-
-    res.render("list", {
-        kindOfDay: currentDay
+    res.render('list', {
+        kindOfDay: day,
+        newListItems: items
     });
 });
 
+
+// POST method route
+app.post('/', function (req, res) {
+    let item = req.body.newItem;
+
+    items.push(item)
+
+    res.redirect('/');
+})
+
+// Listen method route
 app.listen(3000, function () {
     console.log('Server started on port 3000');
 })
