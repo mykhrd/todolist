@@ -1,4 +1,4 @@
-![Preview Image](https://octodex.github.com/images/yaktocat.png)
+![Preview Image](https://raw.githubusercontent.com/mykhrd/todolist/master/todo_image.png)
 
 # todo app sample
 - a todo app for es6 practice
